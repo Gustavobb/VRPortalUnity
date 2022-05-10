@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8427038677936540832}
   - component: {fileID: 4084898044725905330}
   - component: {fileID: 7015357132240492835}
+  - component: {fileID: 7641020336483951239}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -77,18 +78,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d73c728c8d390a43a56b0507dff594b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   gravity: -20
+  speed: 5
+  jumpHeight: 400
   mouseSensitivity: 10
   rotationSmoothTime: 0.05
   smoothMoveTime: 0.1
-  jumpHeight: 400
   hasGravity: 1
   canJump: 1
   paused: 0
   ground:
     serializedVersion: 2
     m_Bits: 1
+  velocity: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  distanceToTheGround: 0
+--- !u!114 &7641020336483951239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6855685749448867477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22942e76f474c94dbd0a53d64959ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 7015357132240492835}
+  canTeleport: 1
 --- !u!1 &6855685749615697020
 GameObject:
   m_ObjectHideFlags: 0

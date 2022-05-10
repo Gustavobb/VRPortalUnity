@@ -27,13 +27,16 @@ public class Portal : MonoBehaviour
     [SerializeField]
     Color disbledColor = new Color (0, 0, 0, 0);
     
+    public bool warpTraveler = false, invertGravity = false, portalScaler = false;
+
     [SerializeField]
-    bool render = true, portalScaler = false, warpTraveler = false, invertGravity = false, progressiveWarping = false, recursive = false;
+    bool render = true, progressiveWarping = false, recursive = false;
 
     [SerializeField]
     int recursionLimit = 5;
-
-    Camera playerCamera, portalCamera;
+    
+    [HideInInspector]
+    public Camera playerCamera, portalCamera;
     
     [Header ("One Sided Portal Settings")]
     public bool oneSidedPortal = false;

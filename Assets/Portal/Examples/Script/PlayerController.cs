@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public float gravity = -10f, speed = 5f, jumpHeight = 5f;
+
     [SerializeField]
-    float speed = 5f, gravity = -10f, mouseSensitivity = 5f, rotationSmoothTime = 0.05f, smoothMoveTime = .1f, jumpHeight = 5f;
+    float mouseSensitivity = 5f, rotationSmoothTime = 0.05f, smoothMoveTime = .1f;
 
     [SerializeField]
     bool hasGravity = true, canJump = true, paused = false;
@@ -14,11 +16,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     LayerMask ground;
     
-    Camera cam;
-    Rigidbody rb;
-    Vector3 direction, velocity;
+    [HideInInspector]
+    public Vector3 velocity;
+    
+    [HideInInspector]
+    public Rigidbody rb;
 
-    float mouseX, mouseY, rotationX, smoothPitch, smoothYaw, yawSmoothV, pitchSmoothV, distanceToTheGround;
+    [HideInInspector]
+    public float distanceToTheGround;
+
+    Camera cam;
+    Vector3 direction;
+
+    float mouseX, mouseY, rotationX, smoothPitch, smoothYaw, yawSmoothV, pitchSmoothV;
     Vector3 targetVelocity, smoothVelocity;
 
     void Start()
