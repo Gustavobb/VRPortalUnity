@@ -11,7 +11,7 @@ public class Traveler : MonoBehaviour
     HandlePortal handlePortal;
     
     Portal portal;
-    Vector3 previousOffsetFromPortal, teleportPoint, initialRotation;
+    Vector3 previousOffsetFromPortal, teleportPoint;
     float initialDistance;
 
     public bool canTeleport = false;
@@ -76,7 +76,6 @@ public class Traveler : MonoBehaviour
     {
         if (portal == null)
         {
-            initialRotation = transform.rotation.eulerAngles;
             portal = portalArg;
             initialDistance = Vector3.Distance(portal.transform.position, transform.position);
             teleportPoint = portal.playerCamera.transform.position;

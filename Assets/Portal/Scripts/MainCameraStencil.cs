@@ -7,7 +7,7 @@ public class MainCameraStencil : MonoBehaviour
     [SerializeField] 
     bool showRenderingTime = false;
     
-    static Portal[] portals;
+    static PortalStencil[] portals;
 
     delegate void PreRenderPortals();
     static PreRenderPortals preRenderPortals;
@@ -25,7 +25,7 @@ public class MainCameraStencil : MonoBehaviour
 
     public static void GetPortalCameras()
     {
-        portals = FindObjectsOfType<Portal>();
+        portals = FindObjectsOfType<PortalStencil>();
         renderPortals = null;
         postRenderPortals = null;
 

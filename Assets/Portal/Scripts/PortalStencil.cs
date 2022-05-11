@@ -7,19 +7,27 @@ public class PortalStencil : MonoBehaviour
 {
     #region Portal Settings
     [Header ("General Settings")]
-    public List<Material> stencils = new List<Material>();
-    public List<Material> stencilsToTeleport = new List<Material>();
-    public bool warpTraveler = false, invertGravity = false, portalScaler = false;
+    [SerializeField]
+    Material portalMaterial;
 
     [SerializeField]
+    List<Material> stencilsOutsidePortal = new List<Material>(), stencilsInsidePortal = new List<Material>();
+    List<Material> originalStencilsOutsidePortal = new List<Material>(), originalStencilsInsidePortal = new List<Material>();
+    [SerializeField]
     bool render = true, progressiveWarping = false;
+    public bool warpTraveler = false, invertGravity = false, portalScaler = false;
 
     [HideInInspector]
     public Camera playerCamera, portalCamera;
+    public enum RenderSide {Back, Front};
     
     [Header ("One Sided Portal Settings")]
+    public bool oneSidedPortalInside = false;
+    public RenderSide renderSideInside;
+    public bool oneSidedPortalOutside = false;
+    public RenderSide renderSideOutside;
+
     public bool oneSidedPortal = false;
-    public enum RenderSide {Back, Front};
     public RenderSide renderSide;
 
     [Header ("Optimization Settings")]
@@ -35,12 +43,11 @@ public class PortalStencil : MonoBehaviour
     #region Portal Variables
     [HideInInspector]
     public bool canBeSeen = true, oneSidedPlaneCanBeSeen = true, canBeSeenByOtherPortal = false, needsToBeRendered = false;
-
     PortalStencil[] allPortalsInScene;
-
     MeshRenderer portalPlane;
     MeshFilter portalPlaneMeshFilter;
-
+    int stencilInsideIndex;
+    bool portalIsSwitchedToInside = false;
     float nearClipOffset = 0.05f, nearClipLimit = 0.2f;
     #endregion
 
@@ -49,11 +56,20 @@ public class PortalStencil : MonoBehaviour
     {
         Setup();
     }
+
+    void OnApplicationQuit()
+    {
+        if (portalIsSwitchedToInside)
+            ChangeRenders();
+    }
     #endregion
 
     #region Portal Initialization
     void Setup()
     {
+        originalStencilsOutsidePortal = new List<Material>(stencilsOutsidePortal);
+        originalStencilsInsidePortal = new List<Material>(stencilsInsidePortal);
+        stencilInsideIndex = stencilsInsidePortal[0].GetInt("_StencilRef");
         allPortalsInScene = FindObjectsOfType<PortalStencil>();
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         portalCamera = GetComponentInChildren<Camera>();
@@ -69,7 +85,6 @@ public class PortalStencil : MonoBehaviour
     {
         bool previousCondition = needsToBeRendered;
         needsToBeRendered = render;
-        if (!render) return;
         CheckCameraCanSee(portalPlane, playerCamera);
 
         if (cullIfNotInFrustum)
@@ -104,7 +119,7 @@ public class PortalStencil : MonoBehaviour
         if (!needsToBeRendered)
             return;
         
-        SetScreenSizeToPreventClipping(portalCamera.transform.position);
+        SetScreenSizeToPreventClipping(playerCamera.transform.position);
     }
 
     public void PostRender()
@@ -118,10 +133,33 @@ public class PortalStencil : MonoBehaviour
 
     public void TurnOffPortal()
     {
+        portalPlane.enabled = false;
     }
 
     public void TurnOnPortal()
     {
+        portalPlane.enabled = true;
+    }
+
+    public void ChangeRenders()
+    {
+        portalIsSwitchedToInside = !portalIsSwitchedToInside;
+        if (portalIsSwitchedToInside)
+        {
+            foreach (Material stencil in stencilsOutsidePortal)
+                stencil.SetInt("_StencilRef", stencilInsideIndex);
+
+            foreach (Material stencil in stencilsInsidePortal)
+                stencil.SetInt("_StencilRef", 0);
+
+            return;
+        }
+
+        foreach (Material stencil in stencilsOutsidePortal)
+            stencil.SetInt("_StencilRef", 0);
+
+        foreach (Material stencil in stencilsInsidePortal)
+            stencil.SetInt("_StencilRef", stencilInsideIndex);
     }
     #endregion
 

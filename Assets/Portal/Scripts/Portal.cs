@@ -27,10 +27,9 @@ public class Portal : MonoBehaviour
     [SerializeField]
     Color disbledColor = new Color (0, 0, 0, 0);
     
-    public bool stencilPortal = false, warpTraveler = false, invertGravity = false, portalScaler = false;
-
     [SerializeField]
     bool render = true, progressiveWarping = false, recursive = false;
+    public bool stencilPortal = false, warpTraveler = false, invertGravity = false, portalScaler = false;
 
     [SerializeField]
     int recursionLimit = 5;
@@ -100,7 +99,6 @@ public class Portal : MonoBehaviour
     {
         bool previousCondition = needsToBeRendered;
         needsToBeRendered = render;
-        if (!render) return;
         CheckCameraCanSee(portalPlane, playerCamera);
 
         if (cullIfNotInFrustum)
@@ -157,7 +155,7 @@ public class Portal : MonoBehaviour
         if (!portalToRender.needsToBeRendered)
             return;
 
-        SetScreenSizeToPreventClipping(playerCamera.transform.position);
+        // SetScreenSizeToPreventClipping(playerCamera.transform.position);
         canBeSeenByOtherPortal = false;
     }
 

@@ -11,29 +11,19 @@ public class TravelerStencil : MonoBehaviour
     HandlePortal handlePortal;
     
     PortalStencil portal;
-    Vector3 previousOffsetFromPortal, teleportPoint, initialRotation;
+    Vector3 previousOffsetFromPortal, teleportPoint;
     float initialDistance;
 
     public bool canTeleport = false;
 
-    void Teleport(Transform fromPortal, Transform toPortal, Vector3 pos, Quaternion rot, float scale, Camera playerCamera, Camera portalCamera) 
+    void Teleport() 
     {
-        transform.position = pos;
-        transform.rotation = rot;
-        
         if (portal.warpTraveler) 
             StartCoroutine(RotateWithLerp());
 
-        transform.localScale *= scale;
-        playerController.gravity *= scale;
-
         if (portal.invertGravity) playerController.gravity *= -1;
-        playerController.jumpHeight *= scale;
-        playerController.speed *= scale;
-        playerController.velocity = toPortal.TransformVector (fromPortal.InverseTransformVector (playerController.velocity));
-        playerController.rb.velocity = toPortal.TransformVector (fromPortal.InverseTransformVector (playerController.rb.velocity));
+        portal.ChangeRenders();
         // playerCamera.GetComponent<OutlinePostProcess>().postprocessMaterial = portalCamera.GetComponent<OutlinePostProcess>().postprocessMaterial;
-        Physics.SyncTransforms();
         if (!portal.warpTraveler) playerController.distanceToTheGround = playerController.GetComponent<Collider>().bounds.extents.y;
     }
 
@@ -56,12 +46,7 @@ public class TravelerStencil : MonoBehaviour
             canTeleport = !(portal.oneSidedPortal && portal.SameSideAsRenderPlane(transform));
             
             if (canTeleport)
-            {
-                Matrix4x4 m = portal.portalThatRendersMe.transform.localToWorldMatrix * portal.transform.worldToLocalMatrix * transform.localToWorldMatrix;    
-                float scale =  portal.portalThatRendersMe.portalScaler ?  portal.portalThatRendersMe.transform.localScale.y/portal.transform.localScale.y : 1f;
-                Teleport(portal.transform, portal.portalThatRendersMe.transform, m.GetColumn(3), m.rotation, scale, portal.portalCamera, portal.portalThatRendersMe.portalCamera);
-                OnExitPortal();
-            }
+                Teleport();
         }
         
         previousOffsetFromPortal = offsetFromPortal;
@@ -76,7 +61,6 @@ public class TravelerStencil : MonoBehaviour
     {
         if (portal == null)
         {
-            initialRotation = transform.rotation.eulerAngles;
             portal = portalArg;
             initialDistance = Vector3.Distance(portal.transform.position, transform.position);
             teleportPoint = portal.playerCamera.transform.position;
