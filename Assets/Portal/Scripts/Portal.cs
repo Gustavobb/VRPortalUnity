@@ -27,7 +27,7 @@ public class Portal : MonoBehaviour
     [SerializeField]
     Color disbledColor = new Color (0, 0, 0, 0);
     
-    public bool warpTraveler = false, invertGravity = false, portalScaler = false;
+    public bool stencilPortal = false, warpTraveler = false, invertGravity = false, portalScaler = false;
 
     [SerializeField]
     bool render = true, progressiveWarping = false, recursive = false;
