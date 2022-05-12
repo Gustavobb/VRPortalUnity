@@ -27,7 +27,9 @@ public class PortalStencil : MonoBehaviour
     public bool oneSidedPortalOutside = false;
     public RenderSide renderSideOutside;
 
+    [HideInInspector]
     public bool oneSidedPortal = false;
+    [HideInInspector]
     public RenderSide renderSide;
 
     [Header ("Optimization Settings")]
@@ -152,6 +154,8 @@ public class PortalStencil : MonoBehaviour
             foreach (Material stencil in stencilsInsidePortal)
                 stencil.SetInt("_StencilRef", 0);
 
+            oneSidedPortal = oneSidedPortalInside;
+            renderSide = renderSideInside;
             return;
         }
 
@@ -160,6 +164,9 @@ public class PortalStencil : MonoBehaviour
 
         foreach (Material stencil in stencilsInsidePortal)
             stencil.SetInt("_StencilRef", stencilInsideIndex);
+        
+        oneSidedPortal = oneSidedPortalOutside;
+        renderSide = renderSideOutside;
     }
     #endregion
 

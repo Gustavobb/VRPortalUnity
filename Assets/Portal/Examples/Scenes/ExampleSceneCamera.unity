@@ -2305,29 +2305,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1605565590, guid: 841694d1f68866543bc9cd83b19252bd, type: 3}
-      propertyPath: oneSidedPortal
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1605565590, guid: 841694d1f68866543bc9cd83b19252bd, type: 3}
       propertyPath: portalToRender
       value: 
       objectReference: {fileID: 1605565590}
     - target: {fileID: 1605565590, guid: 841694d1f68866543bc9cd83b19252bd, type: 3}
-      propertyPath: cullIfNotInFrustum
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1605565590, guid: 841694d1f68866543bc9cd83b19252bd, type: 3}
       propertyPath: portalThatRendersMe
       value: 
       objectReference: {fileID: 1605565590}
-    - target: {fileID: 1605565590, guid: 841694d1f68866543bc9cd83b19252bd, type: 3}
-      propertyPath: optimizeRecursivePortal
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1605565590, guid: 841694d1f68866543bc9cd83b19252bd, type: 3}
-      propertyPath: portalsCanSeeOtherPortals
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5281662746778660412, guid: 841694d1f68866543bc9cd83b19252bd, type: 3}
       propertyPath: m_Name
       value: Portal (1)

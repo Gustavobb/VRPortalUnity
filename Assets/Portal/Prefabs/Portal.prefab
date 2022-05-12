@@ -131,13 +131,13 @@ MonoBehaviour:
   portalThatRendersMe: {fileID: 0}
   portalToRender: {fileID: 0}
   disbledColor: {r: 1, g: 0, b: 0, a: 0}
+  render: 1
+  progressiveWarping: 0
+  recursive: 0
   stencilPortal: 0
   warpTraveler: 0
   invertGravity: 0
   portalScaler: 0
-  render: 1
-  progressiveWarping: 0
-  recursive: 0
   recursionLimit: 5
   playerCamera: {fileID: 0}
   portalCamera: {fileID: 0}
