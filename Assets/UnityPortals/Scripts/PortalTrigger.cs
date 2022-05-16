@@ -16,7 +16,7 @@ public class PortalTrigger : MonoBehaviour
     bool triggered = false;
 
     [SerializeField]
-    PortalTrigger nextPortalEventTrigger;
+    GameObject nextPortalEventTrigger;
 
     enum NextPortalEventTriggerActionType {On, Off, Switch};
     [SerializeField]
@@ -31,13 +31,16 @@ public class PortalTrigger : MonoBehaviour
             GetComponent<BoxCollider>().isTrigger = true;
 
         else if (triggerType == TriggerType.Teleport)
+        {
             traveler.onTraveledPortal += OnTravelerTeleported;
+            GetComponent<BoxCollider>().enabled = false;
+        }
     }
 
     void Start()
     {
         if (nextPortalEventTrigger != null)
-            nextPortalEventTrigger.gameObject.SetActive(false);
+            nextPortalEventTrigger.SetActive(false);
     }
 
     void LateUpdate()
@@ -68,16 +71,16 @@ public class PortalTrigger : MonoBehaviour
                 participatingPortals.Remove(portal);
             }
         }
-        
+
         if (participatingPortals.Count != 0) return;
         if (nextPortalEventTrigger != null)
         {
             if (nextPortalEventTriggerActionType == NextPortalEventTriggerActionType.Off) 
-                nextPortalEventTrigger.gameObject.SetActive(false);
+                nextPortalEventTrigger.SetActive(false);
             else if (nextPortalEventTriggerActionType == NextPortalEventTriggerActionType.On) 
-                nextPortalEventTrigger.gameObject.SetActive(true);
+                nextPortalEventTrigger.SetActive(true);
             else if (nextPortalEventTriggerActionType == NextPortalEventTriggerActionType.Switch) 
-                nextPortalEventTrigger.gameObject.SetActive(!nextPortalEventTrigger.gameObject.activeSelf);
+                nextPortalEventTrigger.SetActive(!nextPortalEventTrigger.activeSelf);
         }
         
         triggered = false;
@@ -90,7 +93,7 @@ public class PortalTrigger : MonoBehaviour
 public class ParticipatingPortal
 {
     public PortalBehaviour portal;
-    public enum TriggerCond {NoCond, OnRendering, OnNotRendering};
+    public enum TriggerCond {NoCond, OnRendering, OnNotRendering, OnSaw, OnNotSaw};
     public TriggerCond triggerCond;
     public bool changeRenderType;
     public enum RenderType {TwoSided, OneSided, Switch};
@@ -141,6 +144,14 @@ public class ParticipatingPortal
         else if (triggerCond == TriggerCond.OnNotRendering)
         {
             if (portal.needsToBeRendered) return false;
+        }
+        else if (triggerCond == TriggerCond.OnSaw)
+        {
+            if (!portal.canBeSeen && !portal.oneSidedPlaneCanBeSeen) return false;
+        }
+        else if (triggerCond == TriggerCond.OnNotSaw)
+        {
+            if (portal.canBeSeen && portal.oneSidedPlaneCanBeSeen) return false;
         }
     
         if (changeRenderType)
