@@ -68,11 +68,13 @@ public class StencilPortal : PortalBehaviour
 
     public override void TurnOffPortal()
     {
+        base.TurnOffPortal();
         portalPlane.enabled = false;
     }
 
     public override void TurnOnPortal()
     {
+        base.TurnOnPortal();
         portalPlane.enabled = true;
     }
 

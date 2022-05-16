@@ -110,6 +110,7 @@ public class CameraPortal : PortalBehaviour
 
     public override void TurnOffPortal()
     {
+        base.TurnOffPortal();
         portalThatRendersMe.portalCamera.enabled = false;
         Material portalPlaneMaterial = portalPlane.material;
         portalPlaneMaterial.SetFloat("_Enabled", 0);
@@ -121,6 +122,7 @@ public class CameraPortal : PortalBehaviour
 
     public override void TurnOnPortal()
     {
+        base.TurnOnPortal();
         portalThatRendersMe.portalCamera.enabled = true;
         Material portalPlaneMaterial = portalPlane.material;
         portalPlaneMaterial.SetFloat("_Enabled", 1);

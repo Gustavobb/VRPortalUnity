@@ -2672,7 +2672,7 @@ MonoBehaviour:
   traveler: {fileID: 1585540433}
   triggerType: 1
   disableAfterTrigger: 1
-  nextPortalEventTrigger: {fileID: 1498303163}
+  nextPortalEventTrigger: {fileID: 1498303161}
   nextPortalEventTriggerActionType: 0
   participatingPortals:
   - portal: {fileID: 1605565590}
@@ -2726,13 +2726,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   traveler: {fileID: 1585540433}
-  triggerType: 1
+  triggerType: 0
   disableAfterTrigger: 1
   nextPortalEventTrigger: {fileID: 0}
   nextPortalEventTriggerActionType: 0
   participatingPortals:
   - portal: {fileID: 1605565590}
-    triggerCond: 2
+    triggerCond: 4
     changeRenderType: 0
     renderType: 1
     actionType: 2

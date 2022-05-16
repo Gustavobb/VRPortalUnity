@@ -37,6 +37,7 @@ public class PortalBehaviour : MonoBehaviour
     public bool canBeSeen = true, oneSidedPlaneCanBeSeen = true, canBeSeenByOtherPortal = false, needsToBeRendered = false;
     protected MeshRenderer portalPlane;
     protected MeshFilter portalPlaneMeshFilter;
+    protected Collider portalCollider;
     protected float nearClipOffset = 0.05f, nearClipLimit = 0.2f;
     #endregion
 
@@ -55,6 +56,7 @@ public class PortalBehaviour : MonoBehaviour
     #region Portal Initialization
     protected virtual void Setup()
     {
+        portalCollider = GetComponent<Collider>();
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         portalPlane = GetComponentInChildren<MeshRenderer>();
         portalPlaneMeshFilter = portalPlane.GetComponent<MeshFilter>();
@@ -106,10 +108,12 @@ public class PortalBehaviour : MonoBehaviour
 
     public virtual void TurnOffPortal()
     {
+        portalCollider.enabled = false;
     }
 
     public virtual void TurnOnPortal()
     {
+        portalCollider.enabled = true;
     }
     #endregion
 
