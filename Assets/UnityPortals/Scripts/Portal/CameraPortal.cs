@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 public class CameraPortal : PortalBehaviour
@@ -37,10 +35,6 @@ public class CameraPortal : PortalBehaviour
     [HideInInspector]
     public Camera portalCamera;
 
-    [Header ("Camera Portal One Sided Portal Settings")]
-    public bool oneSidedPortalCamera = false;
-    public RenderSide renderSideCamera;
-    
     [Header ("Camera Portal Optimization Settings")]
     [SerializeField]
     [Tooltip("Some optimization for recursive portals. Use only if self recursive portals exist in scene.")]
@@ -60,8 +54,6 @@ public class CameraPortal : PortalBehaviour
     protected override void Setup()
     {
         base.Setup();
-        oneSidedPortal = oneSidedPortalCamera;
-        renderSide = renderSideCamera;
         recursionLimit = recursive ? recursionLimit : 1;
         allPortalsInScene = FindObjectsOfType<CameraPortal>();
         portalCamera = GetComponentInChildren<Camera>();

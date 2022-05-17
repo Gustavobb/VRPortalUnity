@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PortalBehaviour : MonoBehaviour
 {
     #region Portal Settings
     [Header ("General Settings")]
-
     public bool render = true;
-    public bool warpTraveler = false, invertGravity = false, progressiveWarping = false;
+    public bool warpTraveler = false, invertGravity = false, progressiveWarping = false, alwaysComputeSidePlayerIsOn = false;
 
     [SerializeField]
     protected float positionOffset = 0.5f, thicknessOffset = 1f;
@@ -16,9 +14,8 @@ public class PortalBehaviour : MonoBehaviour
     [HideInInspector]
     public Camera playerCamera;
 
-    [HideInInspector]
+    [Header ("One Sided Portal Settings")]
     public bool oneSidedPortal = false;
-    [HideInInspector]
     public RenderSide renderSide;
     public enum RenderSide {Back, Front};
 
@@ -34,7 +31,7 @@ public class PortalBehaviour : MonoBehaviour
 
     #region Portal Variables
     [HideInInspector]
-    public bool canBeSeen = true, oneSidedPlaneCanBeSeen = true, canBeSeenByOtherPortal = false, needsToBeRendered = false;
+    public bool canBeSeen = true, oneSidedPlaneCanBeSeen = true, canBeSeenByOtherPortal = false, needsToBeRendered = false, playerSide = false;
     protected MeshRenderer portalPlane;
     protected MeshFilter portalPlaneMeshFilter;
     protected Collider portalCollider;
@@ -84,9 +81,15 @@ public class PortalBehaviour : MonoBehaviour
 
         if (oneSidedPortal)
         {
-            PlayerIsInSameSideAsRender();
+            playerSide = GetViewPointSide(playerCamera.transform.position);
+            oneSidedPlaneCanBeSeen = SameSideAsRenderPlane(playerSide);
             needsToBeRendered = needsToBeRendered && oneSidedPlaneCanBeSeen;
             portalPlane.enabled = oneSidedPlaneCanBeSeen;
+        }
+
+        else if (alwaysComputeSidePlayerIsOn)
+        {
+            playerSide = GetViewPointSide(playerCamera.transform.position);
         }
 
         if (needsToBeRendered != previousCondition)
@@ -118,17 +121,17 @@ public class PortalBehaviour : MonoBehaviour
     #endregion
 
     #region Portal optimization methods
-    protected void PlayerIsInSameSideAsRender()
+    public virtual bool GetViewPointSide(Vector3 point)
     {
-        oneSidedPlaneCanBeSeen = SameSideAsRenderPlane(playerCamera.transform);
+        return Math.Sign(Vector3.Dot(point - transform.position, transform.forward)) > 0 ? true : false;
     }
 
-    public bool SameSideAsRenderPlane(Transform t)
+    public virtual bool SameSideAsRenderPlane(bool side)
     {
-        if (renderSide == RenderSide.Front) return Vector3.Dot (transform.forward, transform.position - t.position) < 0;
-        else if (renderSide == RenderSide.Back) return Vector3.Dot (transform.forward, transform.position - t.position) > 0;
-
-        return false;
+        if (renderSide == RenderSide.Back)
+            return side == false;
+        else
+            return side == true;
     }
 
     protected void CheckCameraCanSee(Renderer renderer, Camera camera)

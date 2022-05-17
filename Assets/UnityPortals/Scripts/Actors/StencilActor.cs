@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StencilActor : MonoBehaviour
@@ -59,7 +57,7 @@ public class StencilActor : MonoBehaviour
         actorMaterial.SetVector("sliceCentre", new Vector4(point.x, point.y, point.z, 0));
     }
 
-    public void HandleRenderingAdjustment(int side, int playerSide)
+    public void HandleRenderingAdjustment(bool side, bool playerSide)
     {
         if (!needsRenderingAdjustment || insidePortal) return;
 

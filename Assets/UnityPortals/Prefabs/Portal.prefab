@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 5281662746778660412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.7917006, y: 2.796656, z: 1}
+  m_LocalScale: {x: 2.791701, y: 2.796656, z: 1}
   m_Children:
   - {fileID: 5281662747177355309}
   - {fileID: 979230794}
@@ -131,6 +131,7 @@ MonoBehaviour:
   warpTraveler: 0
   invertGravity: 0
   progressiveWarping: 0
+  alwaysComputeSidePlayerIsOn: 0
   positionOffset: 0.5
   thicknessOffset: 1
   playerCamera: {fileID: 0}
@@ -142,16 +143,16 @@ MonoBehaviour:
   oneSidedPlaneCanBeSeen: 1
   canBeSeenByOtherPortal: 0
   needsToBeRendered: 1
+  playerSide: 0
   portalShader: {fileID: 4800000, guid: c0b97364ea3cd184e8a288414ea6a37c, type: 3}
   portalThatRendersMe: {fileID: 0}
   portalToRender: {fileID: 0}
   disbledColor: {r: 1, g: 0, b: 0, a: 0}
   portalScaler: 0
+  disablePlaneOnNotRendering: 1
   recursive: 0
   recursionLimit: 5
   portalCamera: {fileID: 0}
-  oneSidedPortalCamera: 0
-  renderSideCamera: 0
   optimizeRecursivePortal: 0
 --- !u!65 &5624541856733837600
 BoxCollider:

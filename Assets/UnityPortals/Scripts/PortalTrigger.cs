@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,10 @@ public class PortalTrigger : MonoBehaviour
     [SerializeField]
     TravelerBehaviour traveler;
 
-    enum TriggerType {Area, Teleport};
+    [SerializeField]
+    PortalBehaviour portalActor;
+
+    enum TriggerType {Area, Teleport, NoTrigger};
     [SerializeField]
     TriggerType triggerType;
 
@@ -28,13 +30,12 @@ public class PortalTrigger : MonoBehaviour
     void Awake() 
     {
         if (triggerType == TriggerType.Area)
-            GetComponent<BoxCollider>().isTrigger = true;
-
-        else if (triggerType == TriggerType.Teleport)
         {
-            traveler.onTraveledPortal += OnTravelerTeleported;
-            GetComponent<BoxCollider>().enabled = false;
+            GetComponent<BoxCollider>().isTrigger = true;
+            return;
         }
+
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     void Start()
@@ -45,13 +46,16 @@ public class PortalTrigger : MonoBehaviour
 
     void LateUpdate()
     {
-        if (triggered)
+        if (triggered || triggerType == TriggerType.NoTrigger)
             HandleParticipatingPortalsTrigger();
     }
 
     void OnTravelerTeleported()
     {
-        triggered = true;
+        if (portalActor == null)
+            triggered = true;
+        else if (portalActor == traveler.portal)
+            triggered = true;
     }
 
     void OnTriggerEnter(Collider other) 
@@ -66,7 +70,7 @@ public class PortalTrigger : MonoBehaviour
         List<ParticipatingPortal> copy = new List<ParticipatingPortal>(participatingPortals);
         foreach (ParticipatingPortal portal in copy)
         {
-            if (portal.HandleTrigger())
+            if (portal.HandleTrigger() && portal.removeAfterTrigger)
             {
                 participatingPortals.Remove(portal);
             }
@@ -93,7 +97,7 @@ public class PortalTrigger : MonoBehaviour
 public class ParticipatingPortal
 {
     public PortalBehaviour portal;
-    public enum TriggerCond {NoCond, OnRendering, OnNotRendering, OnSaw, OnNotSaw};
+    public enum TriggerCond {NoCond, OnRendering, OnNotRendering, OnSaw, OnNotSaw, OnSwitchSides, OnFrontSide, OnBackSide};
     public TriggerCond triggerCond;
     public bool changeRenderType;
     public enum RenderType {TwoSided, OneSided, Switch};
@@ -104,6 +108,8 @@ public class ParticipatingPortal
     public RenderState renderState;
     public enum RenderSide {Back, Front, Switch};
     public RenderSide renderSide;
+    public bool removeAfterTrigger;
+    int previousSide = -1;
     
     void HandleRenderSide()
     {
@@ -152,6 +158,28 @@ public class ParticipatingPortal
         else if (triggerCond == TriggerCond.OnNotSaw)
         {
             if (portal.canBeSeen && portal.oneSidedPlaneCanBeSeen) return false;
+        }
+        else if (triggerCond == TriggerCond.OnFrontSide)
+        {
+            if (!portal.playerSide) return false;
+        }
+        else if (triggerCond == TriggerCond.OnBackSide)
+        {
+            if (portal.playerSide) return false;
+        }
+        else if (triggerCond == TriggerCond.OnSwitchSides)
+        {
+            if (previousSide == -1)
+            {
+                previousSide = portal.playerSide ? 1 : 0;
+                return false;
+            }
+
+            int currentSide = portal.playerSide ? 1 : 0;
+            if (previousSide == currentSide) 
+                return false;
+            
+            previousSide = currentSide;
         }
     
         if (changeRenderType)

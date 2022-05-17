@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class StencilPortal : PortalBehaviour
 {
@@ -27,13 +25,16 @@ public class StencilPortal : PortalBehaviour
     #region Portal Variables
     [HideInInspector]
     StencilPortal[] allPortalsInScene;
-    int previousSide;
+    bool previousSide, insideOut;
     #endregion
 
     #region Portal Initialization
     protected override void Setup()
     {
         base.Setup();
+        insideOut = false;
+        alwaysComputeSidePlayerIsOn = true;
+
         allPortalsInScene = FindObjectsOfType<StencilPortal>();
         int stencilInsideIndex = portalPlane.material.GetInt("_StencilRef");
 
@@ -45,6 +46,27 @@ public class StencilPortal : PortalBehaviour
     #region Portal Rendering
     public override void PreRender()
     {
+        if (insideOut)
+        {
+            if (oneSidedPortalInside)
+            {
+                oneSidedPortal = true;
+                renderSide = renderSideInside;
+            }
+            else
+                oneSidedPortal = false;
+        }
+        else
+        {
+            if (oneSidedPortalOutside)
+            {
+                oneSidedPortal = true;
+                renderSide = renderSideOutside;
+            }
+            else
+                oneSidedPortal = false;
+        }
+
         base.PreRender();
     }
 
@@ -83,8 +105,7 @@ public class StencilPortal : PortalBehaviour
         foreach (StencilActor actor in stencilActors)
             actor.HandleRenderOnPortalChange();
 
-        oneSidedPortal = oneSidedPortalOutside;
-        renderSide = renderSideOutside;
+        insideOut = !insideOut;
     }
     #endregion
 
@@ -100,26 +121,22 @@ public class StencilPortal : PortalBehaviour
 
     protected override void HandleObliqueProjection()
     {
-        Vector3 offset = playerCamera.transform.position - transform.position;
-        int side = Math.Sign(Vector3.Dot(offset, transform.forward)) > 0 ? 1 : -1;
-
         if (isStatic)
         {
-            if (side == previousSide)
+            if (playerSide == previousSide)
                 return;
         }
 
+        int side = playerSide ? 1 : -1;
         Vector3 normal = transform.rotation * Vector3.forward * side;
         foreach (StencilActor actor in stencilActors)
         {
             actor.HandleCuttingPlane(normal, transform.position);
-
-            offset = actor.transform.position - transform.position;
-            int actorSide = Math.Sign(Vector3.Dot(offset, transform.forward)) > 0 ? 1 : -1;
-            actor.HandleRenderingAdjustment(actorSide, side);
+            bool actorSide = GetViewPointSide(actor.transform.position);
+            actor.HandleRenderingAdjustment(actorSide, playerSide);
         }
         
-        previousSide = side;
+        previousSide = playerSide;
     }
     #endregion
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -12,7 +11,8 @@ public class TravelerBehaviour : MonoBehaviour
     public delegate void OnTraveledPortal();
     public OnTraveledPortal onTraveledPortal;
     
-    protected PortalBehaviour portal;
+    [HideInInspector]
+    public PortalBehaviour portal;
     
     protected Vector3 previousOffsetFromPortal, teleportPoint;
     protected float initialDistance;
@@ -41,7 +41,7 @@ public class TravelerBehaviour : MonoBehaviour
         
         if (sideFromPortal != sideFromPortalOld)
         {
-            canTeleport = !(portal.oneSidedPortal && portal.SameSideAsRenderPlane(transform));
+            canTeleport = !(portal.oneSidedPortal && portal.SameSideAsRenderPlane(portal.GetViewPointSide(transform.position)));
             
             if (canTeleport)
                 Teleport();

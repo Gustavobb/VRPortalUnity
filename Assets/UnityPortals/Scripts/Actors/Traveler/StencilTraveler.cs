@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 public class StencilTraveler : TravelerBehaviour
 {
@@ -9,7 +6,9 @@ public class StencilTraveler : TravelerBehaviour
     {
         base.Teleport();
         portal.TeleportedSomeone();
-        onTraveledPortal();
+
+        if (onTraveledPortal != null)
+            onTraveledPortal();
     }
 
     protected override void OnTriggerEnter(Collider other) 

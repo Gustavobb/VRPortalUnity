@@ -1063,6 +1063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963532e701e0aeb4fb9914aca292faaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portal: {fileID: 0}
   canTeleport: 1
 --- !u!1 &191237024
 GameObject:
@@ -5662,6 +5663,7 @@ MonoBehaviour:
   warpTraveler: 0
   invertGravity: 0
   progressiveWarping: 0
+  alwaysComputeSidePlayerIsOn: 0
   positionOffset: 1
   thicknessOffset: 0.1
   playerCamera: {fileID: 0}
@@ -5673,6 +5675,7 @@ MonoBehaviour:
   oneSidedPlaneCanBeSeen: 1
   canBeSeenByOtherPortal: 0
   needsToBeRendered: 0
+  playerSide: 0
   portalMaterial: {fileID: 2100000, guid: c6c9810fddce03e41875b6a6a57c7617, type: 2}
   stencilActors:
   - {fileID: 759699771}
@@ -5687,11 +5690,11 @@ MonoBehaviour:
   - {fileID: 297671016}
   - {fileID: 15893906}
   - {fileID: 1818464868}
-  oneSidedPortalInside: 0
+  oneSidedPortalInside: 1
   renderSideInside: 0
-  oneSidedPortalOutside: 0
-  renderSideOutside: 0
-  isStatic: 1
+  oneSidedPortalOutside: 1
+  renderSideOutside: 1
+  isStatic: 0
 --- !u!65 &5624541857465943090
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5717,6 +5720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963532e701e0aeb4fb9914aca292faaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portal: {fileID: 0}
   canTeleport: 1
 --- !u!54 &7463644344635857364
 Rigidbody:
