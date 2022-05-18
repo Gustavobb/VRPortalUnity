@@ -9,7 +9,12 @@ public class StencilPortal : PortalBehaviour
     Material portalMaterial;
 
     [SerializeField]
+    bool getCurrentActiveMaterialsToPortal = false;
+
+    [SerializeField]
     List<StencilActor> stencilActors = new List<StencilActor>();
+    List<StencilActor> originalActors;
+    List<StencilActor> previousActiveActors;
 
     [Header ("Stencil Portal One Sided Portal Settings")]
     public bool oneSidedPortalInside = false;
@@ -26,11 +31,20 @@ public class StencilPortal : PortalBehaviour
     [HideInInspector]
     StencilPortal[] allPortalsInScene;
     bool previousSide, insideOut;
+    int stencilInsideIndex;
     #endregion
 
     #region Unity Methods
     protected override void Start() 
     {
+        if (getCurrentActiveMaterialsToPortal)
+        {
+            originalActors = new List<StencilActor>(stencilActors);
+            stencilActors.AddRange(StencilActorsManager.activeActors);
+            previousActiveActors = new List<StencilActor>(StencilActorsManager.activeActors);
+            playerCamera.transform.parent.gameObject.GetComponent<StencilTraveler>().onTraveledPortal += UpdateActiveMaterials;
+        }
+        
         bool isStaticCopy = isStatic;
         isStatic = false;
         HandleObliqueProjection();
@@ -47,10 +61,7 @@ public class StencilPortal : PortalBehaviour
         alwaysComputeSidePlayerIsOn = true;
 
         allPortalsInScene = FindObjectsOfType<StencilPortal>();
-        int stencilInsideIndex = portalPlane.material.GetInt("_StencilRef");
-
-        foreach (StencilActor actor in stencilActors)
-            actor.stencilInsideIndex = stencilInsideIndex;
+        stencilInsideIndex = portalPlane.material.GetInt("_StencilRef");
     }
     #endregion
 
@@ -114,7 +125,10 @@ public class StencilPortal : PortalBehaviour
     void ChangeRenders()
     {
         foreach (StencilActor actor in stencilActors)
+        {
+            actor.stencilInsideIndex = stencilInsideIndex;
             actor.HandleRenderOnPortalChange();
+        }
 
         insideOut = !insideOut;
     }
@@ -126,11 +140,24 @@ public class StencilPortal : PortalBehaviour
     #region Portal utility methods
     public override void TeleportedSomeone()
     {
+        originalActors = new List<StencilActor>(previousActiveActors);
         ChangeRenders();
+    }
+
+    protected void UpdateActiveMaterials()
+    {
+        if (!getCurrentActiveMaterialsToPortal) return;
+        if (stencilActors.Contains(StencilActorsManager.activeActors[0])) return;
+
+        stencilActors.Clear();
+        stencilActors.AddRange(originalActors);
+        stencilActors.AddRange(StencilActorsManager.activeActors);
+        previousActiveActors = new List<StencilActor>(StencilActorsManager.activeActors);
     }
 
     protected override void HandleObliqueProjection()
     {
+        // all materials needs to check all portals
         if (isStatic)
         {
             if (playerSide == previousSide)

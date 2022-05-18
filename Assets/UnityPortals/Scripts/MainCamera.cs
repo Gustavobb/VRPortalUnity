@@ -26,10 +26,7 @@ public class MainCamera : MonoBehaviour
 
         Camera mainCamera = GetComponent<Camera>();
         if (URP)
-            RenderPipelineManager.beginFrameRendering += (context, mainCamera) =>
-            {
-                HandlePortalRenderProcess();
-            };;
+            RenderPipelineManager.beginCameraRendering += URPRender;
     }
 
     void GetPortalCameras()
@@ -51,6 +48,11 @@ public class MainCamera : MonoBehaviour
     }
 
     void OnPreCull() 
+    {
+        HandlePortalRenderProcess();
+    }
+
+    void URPRender(ScriptableRenderContext SRC, Camera camera)
     {
         HandlePortalRenderProcess();
     }

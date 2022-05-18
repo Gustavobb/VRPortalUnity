@@ -3474,7 +3474,6 @@ Transform:
   m_Children:
   - {fileID: 705507995}
   - {fileID: 350223}
-  - {fileID: 1234884699}
   - {fileID: 1066498845}
   - {fileID: 1896665844}
   m_Father: {fileID: 0}
@@ -3514,7 +3513,7 @@ Transform:
   - {fileID: 1520932919}
   - {fileID: 518804458}
   m_Father: {fileID: 1034513785}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1095262296
 GameObject:
@@ -3634,16 +3633,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234884698}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -1.9297912, y: 0.8156243, z: 3.100791}
+  m_LocalScale: {x: 1, y: 0.3294968, z: 0.7958092}
   m_Children:
   - {fileID: 203274343}
   - {fileID: 467995358}
   - {fileID: 870763222}
   - {fileID: 1024041160}
-  m_Father: {fileID: 1034513785}
-  m_RootOrder: 2
+  m_Father: {fileID: 5281662746312217391}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1520932918
 GameObject:
@@ -4021,7 +4020,7 @@ Transform:
   - {fileID: 297671012}
   - {fileID: 1818464864}
   m_Father: {fileID: 1034513785}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2077729011
 GameObject:
@@ -5644,6 +5643,7 @@ Transform:
   m_LocalScale: {x: 1.2565824, y: 3.034931, z: 1}
   m_Children:
   - {fileID: 371236184}
+  - {fileID: 1234884699}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -5677,6 +5677,7 @@ MonoBehaviour:
   needsToBeRendered: 0
   playerSide: 0
   portalMaterial: {fileID: 2100000, guid: c6c9810fddce03e41875b6a6a57c7617, type: 2}
+  getCurrentActiveMaterialsToPortal: 0
   stencilActors:
   - {fileID: 759699771}
   - {fileID: 944541721}
@@ -5690,9 +5691,9 @@ MonoBehaviour:
   - {fileID: 297671016}
   - {fileID: 15893906}
   - {fileID: 1818464868}
-  oneSidedPortalInside: 1
+  oneSidedPortalInside: 0
   renderSideInside: 0
-  oneSidedPortalOutside: 1
+  oneSidedPortalOutside: 0
   renderSideOutside: 1
   isStatic: 0
 --- !u!65 &5624541857465943090

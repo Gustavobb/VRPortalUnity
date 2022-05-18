@@ -2,11 +2,22 @@
 
 public class StencilTraveler : TravelerBehaviour
 {
-    protected override void Teleport() 
+    StencilActorsManager stencilActorsManager;
+
+    protected void Start()
+    {
+        stencilActorsManager = FindObjectOfType<StencilActorsManager>();
+    }
+    
+    protected override void Teleport()
     {
         base.Teleport();
-        portal.TeleportedSomeone();
 
+        if (stencilActorsManager != null && stencilActorsManager.getActiveActors)
+            stencilActorsManager.ResetActiveMaterials();
+
+        portal.TeleportedSomeone();
+        
         if (onTraveledPortal != null)
             onTraveledPortal();
     }
@@ -18,7 +29,7 @@ public class StencilTraveler : TravelerBehaviour
             OnEnterPortal(portal);
     }
 
-    protected override void OnTriggerExit(Collider other) 
+    protected override void OnTriggerExit(Collider other)
     {
         StencilPortal portal = other.GetComponent<StencilPortal>();
         if (portal != null)

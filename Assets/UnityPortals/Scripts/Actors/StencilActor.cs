@@ -4,22 +4,28 @@ public class StencilActor : MonoBehaviour
 {
     [SerializeField]
     Material actorMaterial, outsidePortalMaterialFront;
+    StencilActorsManager stencilActorsManager;
 
     Collider col;
+    public bool insidePortal = false;
 
     [SerializeField]
-    bool insidePortal = false, needsCuttingAdjustment = false, needsRenderingAdjustment = false;
+    bool needsCuttingAdjustment = false, needsRenderingAdjustment = false;
 
     [HideInInspector]
     public int stencilInsideIndex;
     int stencilStartIndex;
     MeshRenderer meshRenderer;
-
-    void Start()
+    
+    void Awake()
     {
         col = GetComponent<Collider>();
         stencilStartIndex = actorMaterial.GetInt("_StencilRef");
         meshRenderer = GetComponent<MeshRenderer>();
+        stencilActorsManager = FindObjectOfType<StencilActorsManager>();
+
+        if (stencilActorsManager != null && stencilActorsManager.getActiveActors && !insidePortal)
+            stencilActorsManager.AddActiveActor(this);
     }
 
     void EnterPortal()
@@ -45,6 +51,9 @@ public class StencilActor : MonoBehaviour
             ExitPortal();
             return;
         }
+
+        if (stencilActorsManager != null && stencilActorsManager.getActiveActors)
+            stencilActorsManager.AddActiveActor(this);
 
         EnterPortal();
     }
