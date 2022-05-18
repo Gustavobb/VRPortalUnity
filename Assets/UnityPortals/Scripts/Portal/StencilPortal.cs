@@ -28,6 +28,17 @@ public class StencilPortal : PortalBehaviour
     bool previousSide, insideOut;
     #endregion
 
+    #region Unity Methods
+    protected override void Start() 
+    {
+        bool isStaticCopy = isStatic;
+        isStatic = false;
+        HandleObliqueProjection();
+        isStatic = isStaticCopy;
+        base.Start();
+    }
+    #endregion
+
     #region Portal Initialization
     protected override void Setup()
     {
@@ -110,7 +121,6 @@ public class StencilPortal : PortalBehaviour
     #endregion
 
     #region Portal optimization methods
-    
     #endregion
 
     #region Portal utility methods
