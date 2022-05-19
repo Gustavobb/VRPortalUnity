@@ -13,8 +13,7 @@ public class StencilPortal : PortalBehaviour
 
     [SerializeField]
     List<StencilActor> stencilActors = new List<StencilActor>();
-    List<StencilActor> originalActors;
-    List<StencilActor> previousActiveActors;
+    List<StencilActor> insideActors;
 
     [Header ("Stencil Portal One Sided Portal Settings")]
     public bool oneSidedPortalInside = false;
@@ -39,9 +38,8 @@ public class StencilPortal : PortalBehaviour
     {
         if (getCurrentActiveMaterialsToPortal)
         {
-            originalActors = new List<StencilActor>(stencilActors);
+            insideActors = new List<StencilActor>(stencilActors);
             stencilActors.AddRange(StencilActorsManager.activeActors);
-            previousActiveActors = new List<StencilActor>(StencilActorsManager.activeActors);
             playerCamera.transform.parent.gameObject.GetComponent<StencilTraveler>().onTraveledPortal += UpdateActiveMaterials;
         }
         
@@ -140,7 +138,7 @@ public class StencilPortal : PortalBehaviour
     #region Portal utility methods
     public override void TeleportedSomeone()
     {
-        originalActors = new List<StencilActor>(previousActiveActors);
+        insideActors = new List<StencilActor>(StencilActorsManager.previousActiveActors);
         ChangeRenders();
     }
 
@@ -150,9 +148,8 @@ public class StencilPortal : PortalBehaviour
         if (stencilActors.Contains(StencilActorsManager.activeActors[0])) return;
 
         stencilActors.Clear();
-        stencilActors.AddRange(originalActors);
+        stencilActors.AddRange(insideActors);
         stencilActors.AddRange(StencilActorsManager.activeActors);
-        previousActiveActors = new List<StencilActor>(StencilActorsManager.activeActors);
     }
 
     protected override void HandleObliqueProjection()
