@@ -26,9 +26,11 @@ public class PortalTrigger : MonoBehaviour
 
     [SerializeField]
     List<CameraParticipatingPortal> cameraParticipatingPortals = new List<CameraParticipatingPortal>();
+    List<CameraParticipatingPortal> cameraParticipatingPortalsCopy;
 
     [SerializeField]    
     List<StencilParticipatingPortal> stencilParticipatingPortals = new List<StencilParticipatingPortal>();
+    List<StencilParticipatingPortal> stencilParticipatingPortalsCopy;
 
     bool travelerPreviousSide;
     void Awake() 
@@ -47,6 +49,12 @@ public class PortalTrigger : MonoBehaviour
 
     void Start()
     {
+        cameraParticipatingPortalsCopy = new List<CameraParticipatingPortal>(cameraParticipatingPortals);
+        stencilParticipatingPortalsCopy = new List<StencilParticipatingPortal>(stencilParticipatingPortals);
+    }
+
+    void OnEnable()
+    {
         if (triggerType == TriggerType.OnTravelerSwitchSides)
             travelerPreviousSide = portalActor.playerSide;
     }
@@ -58,7 +66,7 @@ public class PortalTrigger : MonoBehaviour
         
         if (triggerType == TriggerType.OnTravelerSwitchSides)
         {
-            if (travelerPreviousSide != portalActor.playerSide)
+            if (travelerPreviousSide != portalActor.playerSide && traveler.portal == null)
                 HandleParticipatingPortalsTrigger();
 
             travelerPreviousSide = portalActor.playerSide;
@@ -67,7 +75,6 @@ public class PortalTrigger : MonoBehaviour
 
     void OnTravelerTeleported()
     {
-        print("OnTravelerTeleported");
         if (portalActor == null)
             triggered = true;
         else if (portalActor == traveler.portal)
@@ -111,7 +118,10 @@ public class PortalTrigger : MonoBehaviour
             else if (nextPortalEventTriggerActionType == NextPortalEventTriggerActionType.Switch) 
                 nextPortalEventTrigger.SetActive(!nextPortalEventTrigger.activeSelf);
         }
-        
+
+        cameraParticipatingPortals = new List<CameraParticipatingPortal>(cameraParticipatingPortalsCopy);
+        stencilParticipatingPortals = new List<StencilParticipatingPortal>(stencilParticipatingPortalsCopy);
+
         if (disableAfterTrigger)
             gameObject.SetActive(false);
         

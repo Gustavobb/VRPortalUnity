@@ -30,7 +30,9 @@ public class StencilActor : MonoBehaviour
 
     void EnterPortal()
     {
-        col.enabled = true;
+        if (col != null)
+            col.enabled = true;
+
         actorMaterial.SetInt("_StencilRef", 0);
         actorMaterial.SetVector("sliceNormal", new Vector4(0, 0, 0, 0));
         actorMaterial.SetVector("sliceCentre", new Vector4(0, 0, 0, 0));
@@ -38,7 +40,9 @@ public class StencilActor : MonoBehaviour
 
     void ExitPortal()
     {
-        col.enabled = false;
+        if (col != null)
+            col.enabled = false;
+
         meshRenderer.material = actorMaterial;
         actorMaterial.SetInt("_StencilRef", stencilInsideIndex);
     }

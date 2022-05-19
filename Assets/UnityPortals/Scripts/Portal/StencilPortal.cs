@@ -12,6 +12,9 @@ public class StencilPortal : PortalBehaviour
     bool getCurrentActiveMaterialsToPortal = false;
 
     [SerializeField]
+    StencilTraveler playerTraveler;
+
+    [SerializeField]
     List<StencilActor> stencilActors = new List<StencilActor>();
     List<StencilActor> insideActors;
 
@@ -40,7 +43,7 @@ public class StencilPortal : PortalBehaviour
         {
             insideActors = new List<StencilActor>(stencilActors);
             stencilActors.AddRange(StencilActorsManager.activeActors);
-            playerCamera.transform.parent.gameObject.GetComponent<StencilTraveler>().onTraveledPortal += UpdateActiveMaterials;
+            playerTraveler.onTraveledPortal += UpdateActiveMaterials;
         }
         
         bool isStaticCopy = isStatic;
