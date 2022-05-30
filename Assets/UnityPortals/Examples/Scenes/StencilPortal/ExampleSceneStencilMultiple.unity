@@ -3036,6 +3036,7 @@ MonoBehaviour:
   playerSide: 0
   portalMaterial: {fileID: 2100000, guid: e2f671790fbe5f84aa4c16894479df69, type: 2}
   getCurrentActiveMaterialsToPortal: 1
+  playerTraveler: {fileID: 6855685749527600745}
   stencilActors:
   - {fileID: 1273625977}
   - {fileID: 1268279906}
@@ -4353,6 +4354,7 @@ MonoBehaviour:
   playerSide: 0
   portalMaterial: {fileID: 2100000, guid: 5c08379185d2d2841b2d2a9ad37823f5, type: 2}
   getCurrentActiveMaterialsToPortal: 1
+  playerTraveler: {fileID: 6855685749527600745}
   stencilActors:
   - {fileID: 1137251310}
   - {fileID: 1815019180}
@@ -5642,6 +5644,7 @@ MonoBehaviour:
   playerSide: 0
   portalMaterial: {fileID: 2100000, guid: c6c9810fddce03e41875b6a6a57c7617, type: 2}
   getCurrentActiveMaterialsToPortal: 1
+  playerTraveler: {fileID: 6855685749527600745}
   stencilActors:
   - {fileID: 859056986}
   - {fileID: 745749080}
