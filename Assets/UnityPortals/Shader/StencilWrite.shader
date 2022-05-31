@@ -3,6 +3,7 @@ Shader "Unlit/StencilWrite"
     //show values to edit in inspector
 	Properties{
 		[IntRange] _StencilRef ("Stencil Reference Value", Range(0,255)) = 0
+		[Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 0
 	}
 
 	SubShader{
@@ -20,7 +21,7 @@ Shader "Unlit/StencilWrite"
             //don't draw color or depth
 			Blend Zero One
 			ZWrite Off
-			Cull Off
+			Cull [_Cull]
 
 			CGPROGRAM
 			#include "UnityCG.cginc"

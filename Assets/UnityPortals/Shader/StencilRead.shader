@@ -11,10 +11,12 @@ Shader "Custom/StencilRead"
 		sliceNormal("Normal", Vector) = (0,0,0,0)
         sliceCentre ("Centre", Vector) = (0,0,0,0)
         sliceOffsetDst("Offset", Float) = 0
+		_NeedsCut ("Needs Cutting", Range(0, 1)) = 1
+		[Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 0
 	}
 	SubShader {
 		Tags{ "RenderType"="Opaque" "Queue"="Geometry+1"}
-		Cull Off
+		Cull [_Cull]
 
         //stencil operation
 		Stencil 
@@ -35,6 +37,7 @@ Shader "Custom/StencilRead"
 		half _Metallic;
 		half3 _Emission;
 		float4 _CutoffColor;
+		float _NeedsCut;
 
 		// World space normal of slice, anything along this direction from centre will be invisible
         float3 sliceNormal;
@@ -50,10 +53,14 @@ Shader "Custom/StencilRead"
 		};
 
 		void surf (Input i, inout SurfaceOutputStandard o) {
-			float3 adjustedCentre = sliceCentre + sliceNormal * sliceOffsetDst;
-            float3 offsetToSliceCentre = adjustedCentre - i.worldPos;
-            clip (dot(offsetToSliceCentre, sliceNormal));
-            float facing = i.facing * 0.5 + 0.5;
+			float facing = 1.0;
+			if (_NeedsCut > 0.0)
+			{
+				float3 adjustedCentre = sliceCentre + sliceNormal * sliceOffsetDst;
+				float3 offsetToSliceCentre = adjustedCentre - i.worldPos;
+				clip (dot(offsetToSliceCentre, sliceNormal));
+				facing = i.facing * 0.5 + 0.5;
+			}
 
 			fixed4 col = tex2D(_MainTex, i.uv_MainTex) * _Color;
 			o.Albedo = col.rgb * facing;

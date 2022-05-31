@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PortalTrigger : MonoBehaviour
 {
@@ -33,7 +33,7 @@ public class PortalTrigger : MonoBehaviour
     List<StencilParticipatingPortal> stencilParticipatingPortalsCopy;
 
     bool travelerPreviousSide;
-    void Awake() 
+    void Awake()
     {
         if (triggerType == TriggerType.Area)
         {
@@ -64,10 +64,10 @@ public class PortalTrigger : MonoBehaviour
         if (triggered || triggerType == TriggerType.NoTrigger)
             HandleParticipatingPortalsTrigger();
         
-        if (triggerType == TriggerType.OnTravelerSwitchSides)
+        if (triggerType == TriggerType.OnTravelerSwitchSides && !triggered)
         {
             if (travelerPreviousSide != portalActor.playerSide && traveler.portal == null)
-                HandleParticipatingPortalsTrigger();
+                triggered = true;
 
             travelerPreviousSide = portalActor.playerSide;
         }

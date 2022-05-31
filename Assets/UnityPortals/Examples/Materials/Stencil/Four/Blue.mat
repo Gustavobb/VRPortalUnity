@@ -32,6 +32,6 @@ Material:
     - _Color: {r: 0.060103893, g: 0, b: 1, a: 1}
     - _CutoffColor: {r: 1, g: 1, b: 1, a: 0}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
-    - sliceCentre: {r: 0, g: 0, b: 0, a: 0}
-    - sliceNormal: {r: 0, g: 0, b: 0, a: 0}
+    - sliceCentre: {r: -2.93, g: 2.961, b: 4.59, a: 0}
+    - sliceNormal: {r: -0, g: -0, b: -1, a: 0}
   m_BuildTextureStacks: []

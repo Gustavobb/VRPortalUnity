@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public class ParticipatingPortalBehaviour
 {
@@ -13,6 +15,7 @@ public class ParticipatingPortalBehaviour
     public enum RenderSide {Back, Front, Switch};
     public RenderSide renderSide;
     public bool removeAfterTrigger;
+    public List<ObjectTrigger> objectsToTrigger = new List<ObjectTrigger>();
     protected int previousSide = -1;
     
     protected virtual void HandleRenderSide()
@@ -35,30 +38,18 @@ public class ParticipatingPortalBehaviour
 
     protected virtual bool HandleConditions(PortalBehaviour p, TravelerBehaviour t)
     {
-        if (triggerCond == TriggerCond.OnRendering)
-        {
-            if (!p.needsToBeRendered) return false;
-        }
-        else if (triggerCond == TriggerCond.OnNotRendering)
-        {
-            if (p.needsToBeRendered) return false;
-        }
-        else if (triggerCond == TriggerCond.OnSaw)
-        {
-            if (!p.canBeSeen && !p.oneSidedPlaneCanBeSeen) return false;
-        }
-        else if (triggerCond == TriggerCond.OnNotSaw)
-        {
-            if (p.canBeSeen && p.oneSidedPlaneCanBeSeen) return false;
-        }
-        else if (triggerCond == TriggerCond.OnFrontSide)
-        {
-            if (!p.playerSide) return false;
-        }
-        else if (triggerCond == TriggerCond.OnBackSide)
-        {
-            if (p.playerSide) return false;
-        }
+        if (triggerCond == TriggerCond.OnRendering && !p.needsToBeRendered)
+            return false;
+        else if (triggerCond == TriggerCond.OnNotRendering && p.needsToBeRendered)
+            return false;
+        else if (triggerCond == TriggerCond.OnSaw && (!p.canBeSeen && !p.oneSidedPlaneCanBeSeen))
+            return false;
+        else if (triggerCond == TriggerCond.OnNotSaw && (p.canBeSeen && p.oneSidedPlaneCanBeSeen))
+            return false;
+        else if (triggerCond == TriggerCond.OnFrontSide && !p.playerSide)
+            return false;
+        else if (triggerCond == TriggerCond.OnBackSide && p.playerSide)
+            return false;
         else if (triggerCond == TriggerCond.OnSwitchSides)
         {
             if (previousSide == -1 || t.portal != null)
@@ -81,6 +72,9 @@ public class ParticipatingPortalBehaviour
         else if (actionType == ActionType.ChangeRenderState)
             HandleRenderState(p);
         
+        foreach (ObjectTrigger ot in objectsToTrigger)
+            ot.HandleRenderState();
+
         return true;
     }
 
