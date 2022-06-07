@@ -8,14 +8,14 @@ public class MainCamera : MonoBehaviour
     
     static PortalBehaviour[] portals;
 
-    delegate void PreRenderPortals();
-    static PreRenderPortals preRenderPortals;
+    public delegate void PreRenderPortals();
+    public static PreRenderPortals preRenderPortals;
 
-    delegate void RenderPortals();
-    static RenderPortals renderPortals;
+    public delegate void RenderPortals();
+    public static RenderPortals renderPortals;
 
-    delegate void PostRenderPortals();
-    static RenderPortals postRenderPortals;
+    public delegate void PostRenderPortals();
+    public static RenderPortals postRenderPortals;
 
     public enum PortalType {Camera, Stencil};
     public PortalType portalType;

@@ -48,6 +48,13 @@ public class PortalBehaviour : MonoBehaviour
     {
         TurnOffPortal();
     }
+
+    void OnDestroy()
+    {
+        MainCamera.preRenderPortals -= PreRender;
+        MainCamera.postRenderPortals -= PostRender;
+        MainCamera.renderPortals -= Render;
+    }
     #endregion
 
     #region Portal Initialization

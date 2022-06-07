@@ -127,6 +127,9 @@ public class StencilPortal : PortalBehaviour
     {
         foreach (StencilActor actor in stencilActors)
         {
+            if (actor == null)
+                continue;
+                
             actor.stencilInsideIndex = stencilInsideIndex;
             actor.HandleRenderOnPortalChange();
         }
@@ -168,6 +171,9 @@ public class StencilPortal : PortalBehaviour
         Vector3 normal = transform.rotation * Vector3.forward * side;
         foreach (StencilActor actor in stencilActors)
         {
+            if (actor == null)
+                continue;
+
             actor.HandleCuttingPlane(normal, transform.position);
             bool actorSide = GetViewPointSide(actor.transform.position);
             actor.HandleRenderingAdjustment(actorSide, playerSide);

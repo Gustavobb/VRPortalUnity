@@ -3,7 +3,77 @@ guid: c0f22c39a0e001447b753872c05dad85
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark-Plant
+    second: {fileID: 2100000, guid: af87c7e8f5dd1af4fa3f19fae66c9361, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ceiling
+    second: {fileID: 2100000, guid: abb8e6f17a025cd46859b4456585a06d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ceiling-Light
+    second: {fileID: 2100000, guid: b61285d4837a6514eb27c12d46280d71, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Curtains-90s
+    second: {fileID: 2100000, guid: 323ceed7d2a59104c9ab70e0b84cd4a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fireplace
+    second: {fileID: 2100000, guid: af3dbb602dc1cd54d9bb2e05b9ab4b27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor
+    second: {fileID: 2100000, guid: 72d1fdc065aa75c4886b59eb2e4cdf44, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paintings-90s
+    second: {fileID: 2100000, guid: 79a4a73303b18d348836fd9de5f2cf45, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pot-90s
+    second: {fileID: 2100000, guid: c45d9e7a0e93f3f479126d1e604e8c1e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rug-90s
+    second: {fileID: 2100000, guid: 3402cd09a31c69b46a2d0a4ba63b97b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sofa-90s
+    second: {fileID: 2100000, guid: 6872fcb2d58749442bf7eaa16bedab41, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tables
+    second: {fileID: 2100000, guid: 2fea8182aad4e1544bac36615ec3513f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Television-90s
+    second: {fileID: 2100000, guid: 68c019ebedaf52141aa9bcb4a0339e15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls
+    second: {fileID: 2100000, guid: d498502e0f317554996acb7ac6e77067, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Window-Frame
+    second: {fileID: 2100000, guid: 99a1865c0f455204dbb7b33537619dae, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,16 +106,16 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1

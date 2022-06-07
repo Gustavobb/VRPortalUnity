@@ -84,7 +84,7 @@ public class PortalTrigger : MonoBehaviour
     void OnTriggerEnter(Collider other) 
     {
         if (other.GetComponent<TravelerBehaviour>() == traveler && triggerType == TriggerType.Area)
-            triggered = true;         
+            triggered = true;
     }
 
     void HandleParticipatingPortalsTrigger()

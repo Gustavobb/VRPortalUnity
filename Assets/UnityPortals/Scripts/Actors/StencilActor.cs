@@ -26,6 +26,9 @@ public class StencilActor : MonoBehaviour
 
         if (stencilActorsManager != null && stencilActorsManager.getActiveActors && !insidePortal)
             stencilActorsManager.AddActiveActor(this);
+        
+        else if (col != null)
+            col.enabled = false;
     }
 
     void EnterPortal()
@@ -81,6 +84,16 @@ public class StencilActor : MonoBehaviour
     }
 
     void OnApplicationQuit()
+    {
+        Reset();
+    }
+
+    void OnDestroy()
+    {
+        Reset();
+    }
+
+    void Reset()
     {
         actorMaterial.SetVector("sliceNormal", new Vector4(0, 0, 0, 0));
         actorMaterial.SetVector("sliceCentre", new Vector4(0, 0, 0, 0));
