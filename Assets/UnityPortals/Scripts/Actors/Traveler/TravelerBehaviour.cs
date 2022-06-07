@@ -27,7 +27,7 @@ public class TravelerBehaviour : MonoBehaviour
 
     protected virtual void HandleTeleportation()
     {
-        if (!portal.gameObject.activeSelf) 
+        if (portal == null || !portal.gameObject.activeSelf) 
         {
             OnExitPortal();
             return;

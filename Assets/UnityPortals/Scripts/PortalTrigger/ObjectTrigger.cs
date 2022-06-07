@@ -10,6 +10,8 @@ public class ObjectTrigger
     
     public void HandleRenderState()
     {
+        if (gameObject == null) return;
+
         if (objectActiveState == RenderState.Off)
             gameObject.SetActive(false);
         else if (objectActiveState == RenderState.On)
