@@ -1,9 +1,44 @@
 fileFormatVersion: 2
 guid: 0f395f6c73758ad4196f5cca42a31595
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ceiling-End
+    second: {fileID: 2100000, guid: d5e26a4211ec90f4e9fbc8cdba8f6a51, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Final-Painting
+    second: {fileID: 2100000, guid: 8963f90c8757e35409a1a8cdec9810eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor-End
+    second: {fileID: 2100000, guid: c9b7ea48f0026754e9f7dc63fa004e47, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main-Painting.002
+    second: {fileID: 2100000, guid: 58b83b14dcc4ddd49a98500ec25dffb7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paintings-Corredor.001
+    second: {fileID: 2100000, guid: afdc66f7736e31e4a9f817b6969ef858, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Quartinho
+    second: {fileID: 2100000, guid: c2044a6880963cd48a310ad705272172, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls-End
+    second: {fileID: 2100000, guid: ae89eb6c731da554bb8f907bb7383fe7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -14,7 +49,6 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 1
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -44,10 +78,9 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -56,7 +89,6 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
-    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

@@ -16,12 +16,17 @@ public class StencilActor : MonoBehaviour
     public int stencilInsideIndex;
     int stencilStartIndex;
     MeshRenderer meshRenderer;
+    SkinnedMeshRenderer skinnedMeshRenderer;
     
     void Awake()
     {
         col = GetComponent<Collider>();
         stencilStartIndex = actorMaterial.GetInt("_StencilRef");
+
         meshRenderer = GetComponent<MeshRenderer>();
+        if (meshRenderer == null)
+            skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+
         stencilActorsManager = FindObjectOfType<StencilActorsManager>();
 
         if (stencilActorsManager != null && stencilActorsManager.getActiveActors && !insidePortal)
@@ -46,7 +51,11 @@ public class StencilActor : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
-        meshRenderer.material = actorMaterial;
+        if (meshRenderer != null)
+            meshRenderer.material = actorMaterial;
+        else if (skinnedMeshRenderer != null)
+            skinnedMeshRenderer.material = actorMaterial;
+
         actorMaterial.SetInt("_StencilRef", stencilInsideIndex);
     }
 
@@ -78,9 +87,19 @@ public class StencilActor : MonoBehaviour
         if (!needsRenderingAdjustment || insidePortal) return;
 
         if (side == playerSide)
-            meshRenderer.material = outsidePortalMaterialFront;
+        {
+            if (meshRenderer != null)
+                meshRenderer.material = outsidePortalMaterialFront;
+            else if (skinnedMeshRenderer != null)
+                skinnedMeshRenderer.material = outsidePortalMaterialFront;
+        }
         else
-            meshRenderer.material = actorMaterial;
+        {
+            if (meshRenderer != null)
+                meshRenderer.material = actorMaterial;
+            else if (skinnedMeshRenderer != null)
+                skinnedMeshRenderer.material = actorMaterial;
+        }
     }
 
     void OnApplicationQuit()
@@ -101,6 +120,9 @@ public class StencilActor : MonoBehaviour
         if (stencilStartIndex != actorMaterial.GetInt("_StencilRef"))
             actorMaterial.SetInt("_StencilRef", stencilStartIndex);
         
-        meshRenderer.material = actorMaterial;
+        if (meshRenderer != null)
+                meshRenderer.material = actorMaterial;
+        else if (skinnedMeshRenderer != null)
+            skinnedMeshRenderer.material = actorMaterial;
     }
 }
