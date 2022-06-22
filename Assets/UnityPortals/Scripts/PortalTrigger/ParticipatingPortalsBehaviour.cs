@@ -16,6 +16,7 @@ public class ParticipatingPortalBehaviour
     public RenderSide renderSide;
     public bool removeAfterTrigger;
     public List<ObjectTrigger> objectsToTrigger = new List<ObjectTrigger>();
+    public bool shrinkAndGrow = false;
     protected int previousSide = -1;
     
     protected virtual void HandleRenderSide()
@@ -29,11 +30,31 @@ public class ParticipatingPortalBehaviour
     protected virtual void HandleRenderState(PortalBehaviour p)
     {
         if (renderState == RenderState.Off)
-            p.render = false;
+        {
+            if (shrinkAndGrow)
+                p.ShrinkPortal(.5f);
+            else
+                p.render = false;
+        }
         else if (renderState == RenderState.On)
-            p.render = true;
+        {
+            if (shrinkAndGrow)
+                p.GrowPortal(.5f);
+            else
+                p.render = true;
+        }
         else if (renderState == RenderState.Switch)
-            p.render = !p.render;
+        {
+            if (shrinkAndGrow)
+            {
+                if (p.render)
+                    p.ShrinkPortal(.5f);
+                else
+                    p.GrowPortal(.5f);
+            }
+            else
+                p.render = !p.render;
+        }
     }
 
     protected virtual bool HandleConditions(PortalBehaviour p, TravelerBehaviour t)

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class PortalBehaviour : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class PortalBehaviour : MonoBehaviour
     protected MeshFilter portalPlaneMeshFilter;
     protected Collider portalCollider;
     protected float nearClipOffset = 0.05f, nearClipLimit = 0.2f;
+    Vector3 startScale;
     #endregion
 
     #region Unity Methods
@@ -60,6 +62,7 @@ public class PortalBehaviour : MonoBehaviour
     #region Portal Initialization
     protected virtual void Setup()
     {
+        startScale = transform.localScale;
         portalCollider = GetComponent<Collider>();
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         portalPlane = GetComponentInChildren<MeshRenderer>();
@@ -183,6 +186,30 @@ public class PortalBehaviour : MonoBehaviour
 
         portalPlane.transform.localScale = new Vector3 (portalPlane.transform.localScale.x, portalPlane.transform.localScale.y, screenThickness * thicknessOffset);
         portalPlane.transform.localPosition = Vector3.forward * screenThickness * ((viewFacingSameDirAsPortal) ? positionOffset : -positionOffset);
+    }
+
+    public void ShrinkPortal(float shrinkDuration)
+    {
+        StartCoroutine(LerpPortalScale(startScale, Vector3.zero, shrinkDuration, false));
+    }
+
+    public void GrowPortal(float growDuration)
+    {
+        StartCoroutine(LerpPortalScale(Vector3.zero, startScale, growDuration, true));
+    }
+
+    IEnumerator LerpPortalScale(Vector3 startScale, Vector3 endScale, float time, bool renderP)
+    {
+        if (renderP) render = true;
+        float elapsedTime = 0;
+        while (elapsedTime < time)
+        {
+            transform.localScale = Vector3.Lerp(startScale, endScale, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        render = renderP;
     }
     #endregion
 }
